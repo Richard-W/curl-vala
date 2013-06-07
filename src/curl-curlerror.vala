@@ -1,5 +1,6 @@
 namespace Curl {
 	public errordomain CurlError {
-		INIT_FAILED	
+		INIT_FAILED,
+		PERFORM_FAILED
 	}
 }

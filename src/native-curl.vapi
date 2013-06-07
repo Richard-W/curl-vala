@@ -9,6 +9,9 @@ namespace Native.Curl {
 
 	public CURL* curl_easy_init();
 	public void curl_easy_cleanup(CURL* handle);
+	public int curl_easy_perform(CURL* handle);
+	public string curl_easy_strerror(int errorcode);
+	public void curl_free(char* ptr);
 
 	/* Constants */
 	
