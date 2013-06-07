@@ -1,0 +1,113 @@
+#!/bin/sh
+#cmake-configure-wrapper: An imitation of the autotools configure script
+#Copyright (C) 2013 Richard Wiedenhöft <richard.wiedenhoeft@gmail.com>
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+CMAKE_ARGUMENTS=""
+
+#Variables of the form SET_* are used to ensure
+#that an argument ist not called twice
+SET_PREFIX=0
+SET_CC=0
+SET_CXX=0
+SET_SRCDIR=0
+SET_BUILD_TYPE=0
+
+#check if cmake is installed
+CMAKE_PATH=`which cmake`
+if [ $? -eq 0 ]; then
+	echo "Found cmake at $CMAKE_PATH"
+else
+	echo "Could not find cmake executable"
+	exit 1
+fi
+
+#Read arguments
+for arg in $@; do
+	#seperate key=value pairs
+	arg_name=`echo $arg | cut -d'=' -f1`
+	arg_value=`echo $arg | cut -s -d'=' -f2`
+
+	case "$arg_name" in
+	"--prefix")
+		if [ $SET_PREFIX -eq 0 ]; then
+			CMAKE_ARGUMENTS=$CMAKE_ARGUMENTS" -DCMAKE_INSTALL_PREFIX:PATH=$arg_value"
+			SET_PREFIX=1
+		else
+			echo "--prefix used twice. Exiting..."
+			exit 1
+		fi
+		;;
+	"--srcdir")
+		if [ $SET_SRCDIR -eq 0 ]; then
+			SOURCE_DIR=$arg_value;
+			SET_SRCDIR=1
+		else
+			echo "--srcdir used twice. Exiting..."
+			exit 1
+		fi
+		;;
+	"--build-type")
+		if [ $SET_BUILD_TYPE -eq 0 ]; then
+			CMAKE_ARGUMENTS=$CMAKE_ARGUMENTS" -DCMAKE_BUILD_TYPE=$arg_value"
+			SET_BUILD_TYPE=1
+		else
+			echo "--build-type used twice. Exiting..."
+			exit 1
+		fi
+		;;
+	"CC")
+		if [ $SET_CC -eq 0 ]; then
+			CMAKE_ARGUMENTS=$CMAKE_ARGUMENTS" -DCMAKE_C_COMPILER=$arg_value"
+			SET_CC=1
+		else
+			echo "CC used twice. Exiting..."
+			exit 1
+		fi
+		;;
+	"CXX")
+		if [ $SET_CXX -eq 0 ]; then
+			CMAKE_ARGUMENTS=$CMAKE_ARGUMENTS" -DCMAKE_CXX_COMPILER=$arg_value"
+			SET_CXX=1
+		else
+			echo "CXX used twice. Exiting..."
+			exit 1
+		fi
+		;;
+	*)
+		echo "Unrecognized argument: $arg_name. Exiting..."
+		exit 1
+		;;
+	esac
+done
+
+if [ $SET_SRCDIR -eq 0 ]; then
+	#Get source directory
+	SOURCE_DIR=`dirname $0`
+fi
+
+cmake $CMAKE_ARGUMENTS $SOURCE_DIR
+CMAKE_EXIT_STATUS=$?
+
+if [ $CMAKE_EXIT_STATUS -ne 0 ]; then
+	echo "Cmake terminated with error code "$CMAKE_EXIT_STATUS
+	exit 1
+fi
+
+#write config.status script
+echo "#!/bin/sh" > config.status
+echo $CMAKE_PATH""$CMAKE_ARGUMENTS" "$SOURCE_DIR >> config.status
+chmod +x config.status
+echo "Created config.status"
