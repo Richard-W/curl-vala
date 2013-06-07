@@ -26,7 +26,7 @@ namespace Native.Curl {
 	public const int CURLOPT_RANGE;
 	public const int CURLOPT_INFILE;
 	public const int CURLOPT_ERRORBUFFER;
-	public const int CURLOPT_WRITEFUNCTION;
+	public const int CURLOPT_WRITEFUNCTION; //Implemented
 	public const int CURLOPT_READFUNCTION;
 	public const int CURLOPT_TIMEOUT;
 	public const int CURLOPT_INFILESIZE;

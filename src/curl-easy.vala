@@ -27,5 +27,9 @@ namespace Curl {
 		public void set_followlocation(bool val) {
 			curl_easy_setopt(this.handle, CURLOPT_FOLLOWLOCATION, val);
 		}
+
+		public void set_receiver(Receiver receiver) {
+			curl_easy_setopt(this.handle, CURLOPT_WRITEFUNCTION, receiver.write_function);
+		}
 	}
 }
