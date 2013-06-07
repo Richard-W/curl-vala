@@ -12,11 +12,13 @@ namespace Native.Curl {
 	public int curl_easy_perform(CURL* handle);
 	public string curl_easy_strerror(int errorcode);
 	public void curl_free(char* ptr);
+	[CCode(sentinel="")]
+	public int curl_easy_setopt(CURL* handle, int option, ...);
 
 	/* Constants */
 	
 	public const int CURLOPT_FILE;
-	public const int CURLOPT_URL;
+	public const int CURLOPT_URL; //Implemented
 	public const int CURLOPT_PORT;
 	public const int CURLOPT_PROXY;
 	public const int CURLOPT_USERPWD;
@@ -61,7 +63,7 @@ namespace Native.Curl {
 	public const int CURLOPT_DIRLISTONLY;
 	public const int CURLOPT_APPEND;
 	public const int CURLOPT_NETRC;
-	public const int CURLOPT_FOLLOWLOCATION;
+	public const int CURLOPT_FOLLOWLOCATION; //Implemented
 	public const int CURLOPT_TRANSFERTEXT;
 	public const int CURLOPT_PUT;
 	public const int CURLOPT_PROGRESSFUNCTION;
