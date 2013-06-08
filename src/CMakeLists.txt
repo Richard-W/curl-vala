@@ -16,3 +16,23 @@ target_link_libraries(vala-curl
 	${GOBJECT_LIBRARIES}
 	${CURL_LIBRARIES}
 )
+
+install(
+	TARGETS
+		vala-curl
+	LIBRARY DESTINATION lib
+)
+
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.vapi
+	DESTINATION
+		share/vala/vapi/
+)
+
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.h
+	DESTINATION
+		include/
+)
