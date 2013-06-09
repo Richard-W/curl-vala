@@ -4,6 +4,9 @@ namespace Curl {
 	public class Easy : Object {
 		private CURL* handle;
 
+		//Mainly for reference so the receiver doesnt get freed
+		private Receiver receiver;
+
 		public Easy() throws CurlError {
 			this.handle = curl_easy_init();
 			if(this.handle == null)
@@ -29,7 +32,9 @@ namespace Curl {
 		}
 
 		public void set_receiver(Receiver receiver) {
-			curl_easy_setopt(this.handle, CURLOPT_WRITEFUNCTION, receiver.write_function);
+			this.receiver = receiver;
+			curl_easy_setopt(this.handle, CURLOPT_WRITEFUNCTION, write_function);
+			curl_easy_setopt(this.handle, CURLOPT_FILE, receiver.get_data_struct());
 		}
 	}
 }
