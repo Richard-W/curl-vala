@@ -187,8 +187,8 @@ namespace Native.Curl {
 	public const int CURLOPT_SSH_KNOWNHOSTS;
 	public const int CURLOPT_SSH_KEYFUNCTION;
 	public const int CURLOPT_SSH_KEYDATA;
-	public const int CURLOPT_MAIL_FROM;
-	public const int CURLOPT_MAIL_RCPT;
+	public const int CURLOPT_MAIL_FROM; //Implemented
+	public const int CURLOPT_MAIL_RCPT; //Implemented
 	public const int CURLOPT_FTP_USE_PRET;
 	public const int CURLOPT_RTSP_REQUEST;
 	public const int CURLOPT_RTSP_SESSION_ID;

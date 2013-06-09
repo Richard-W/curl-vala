@@ -58,5 +58,13 @@ namespace Curl {
 		public void set_password(string password) {
 			curl_easy_setopt(this.handle, CURLOPT_PASSWORD, password);
 		}
+
+		public void set_mail_from(string from) {
+			curl_easy_setopt(this.handle, CURLOPT_MAIL_FROM, from);
+		}
+
+		public void set_mail_rcpt(string rcpt) {
+			curl_easy_setopt(this.handle, CURLOPT_MAIL_RCPT, rcpt);
+		}
 	}
 }
