@@ -43,5 +43,12 @@ namespace Curl {
 			curl_easy_setopt(this.handle, CURLOPT_READFUNCTION, read_function);
 			curl_easy_setopt(this.handle, CURLOPT_INFILE, sender.get_data_struct());
 		}
+
+		public void set_ssl(bool val) {
+			if(val)
+				curl_easy_setopt(this.handle, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
+			else
+				curl_easy_setopt(this.handle, CURLOPT_USE_SSL, (long)CURLUSESSL_NONE);
+		}
 	}
 }

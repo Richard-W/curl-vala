@@ -17,6 +17,9 @@ namespace Native.Curl {
 
 	/* Constants */
 	
+	public const int CURLUSESSL_ALL;
+	public const int CURLUSESSL_NONE;
+
 	public const int CURLOPT_FILE; //Implemented
 	public const int CURLOPT_URL; //Implemented
 	public const int CURLOPT_PORT;
@@ -126,7 +129,7 @@ namespace Native.Curl {
 	public const int CURLOPT_RESUME_FROM_LARGE;
 	public const int CURLOPT_MAXFILESIZE_LARGE;
 	public const int CURLOPT_NETRC_FILE;
-	public const int CURLOPT_USE_SSL;
+	public const int CURLOPT_USE_SSL; //Implemented
 	public const int CURLOPT_POSTFIELDSIZE_LARGE;
 	public const int CURLOPT_TCP_NODELAY;
 	public const int CURLOPT_FTPSSLAUTH;
