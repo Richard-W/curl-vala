@@ -50,5 +50,13 @@ namespace Curl {
 			else
 				curl_easy_setopt(this.handle, CURLOPT_USE_SSL, (long)CURLUSESSL_NONE);
 		}
+
+		public void set_username(string username) {
+			curl_easy_setopt(this.handle, CURLOPT_USERNAME, username);
+		}
+
+		public void set_password(string password) {
+			curl_easy_setopt(this.handle, CURLOPT_PASSWORD, password);
+		}
 	}
 }

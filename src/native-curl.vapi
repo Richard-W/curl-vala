@@ -174,8 +174,8 @@ namespace Native.Curl {
 	public const int CURLOPT_ISSUERCERT;
 	public const int CURLOPT_ADDRESS_SCOPE;
 	public const int CURLOPT_CERTINFO;
-	public const int CURLOPT_USERNAME;
-	public const int CURLOPT_PASSWORD;
+	public const int CURLOPT_USERNAME; //Implemented
+	public const int CURLOPT_PASSWORD; //Implemented
 	public const int CURLOPT_PROXYUSERNAME;
 	public const int CURLOPT_PROXYPASSWORD;
 	public const int CURLOPT_NOPROXY;
