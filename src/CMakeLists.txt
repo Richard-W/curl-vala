@@ -2,6 +2,7 @@ vala_precompile(C_SOURCES
 		curl-easy.vala
 		curl-curlerror.vala
 		curl-receiver.vala
+		curl-sender.vala
 	PACKAGES
 		posix
 	CUSTOM_VAPIS

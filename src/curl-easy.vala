@@ -6,6 +6,7 @@ namespace Curl {
 
 		//Mainly for reference so the receiver doesnt get freed
 		private Receiver receiver;
+		private Sender sender;
 
 		public Easy() throws CurlError {
 			this.handle = curl_easy_init();
@@ -35,6 +36,12 @@ namespace Curl {
 			this.receiver = receiver;
 			curl_easy_setopt(this.handle, CURLOPT_WRITEFUNCTION, write_function);
 			curl_easy_setopt(this.handle, CURLOPT_FILE, receiver.get_data_struct());
+		}
+
+		public void set_sender(Sender sender) {
+			this.sender = sender;
+			curl_easy_setopt(this.handle, CURLOPT_READFUNCTION, read_function);
+			curl_easy_setopt(this.handle, CURLOPT_INFILE, sender.get_data_struct());
 		}
 	}
 }
