@@ -17,14 +17,14 @@ namespace Native.Curl {
 
 	/* Constants */
 	
-	public const int CURLOPT_FILE;
+	public const int CURLOPT_FILE; //Implemented
 	public const int CURLOPT_URL; //Implemented
 	public const int CURLOPT_PORT;
 	public const int CURLOPT_PROXY;
 	public const int CURLOPT_USERPWD;
 	public const int CURLOPT_PROXYUSERPWD;
 	public const int CURLOPT_RANGE;
-	public const int CURLOPT_INFILE;
+	public const int CURLOPT_INFILE; //Implemented
 	public const int CURLOPT_ERRORBUFFER;
 	public const int CURLOPT_WRITEFUNCTION; //Implemented
 	public const int CURLOPT_READFUNCTION;
