@@ -4,7 +4,7 @@ namespace Curl {
 	public class Easy : Object {
 		private CURL* handle;
 
-		//Mainly for reference so the receiver doesnt get freed
+		//Mainly for reference so the receiver and the sender are not freed
 		private Receiver receiver;
 		private Sender sender;
 
@@ -21,7 +21,7 @@ namespace Curl {
 		public void perform() throws CurlError {
 			int res = curl_easy_perform(this.handle);
 			if(res != 0)
-				throw new CurlError.PERFORM_FAILED(curl_easy_strerror(res));
+				throw new CurlError.PERFORM_FAILED((string)curl_easy_strerror(res));
 		}
 
 		public void set_url(string url) {
