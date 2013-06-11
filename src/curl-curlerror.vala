@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+[CCode(lower_case_cprefix="vcurl_",cprefix="VCURL")]
 namespace Curl {
 	public errordomain CurlError {
 		PERFORM_FAILED

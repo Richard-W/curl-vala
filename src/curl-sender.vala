@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+[CCode(lower_case_cprefix="vcurl",cprefix="VCURL_")]
 namespace Curl {
 	public class Sender {
 		private SenderData* data;

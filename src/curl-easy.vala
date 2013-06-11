@@ -18,6 +18,7 @@
  */
 using Native.Curl;
 
+[CCode(lower_case_cprefix="vcurl_",cprefix="VCURL_")]
 namespace Curl {
 	public class Easy : Object {
 		private EasyHandle handle;
@@ -30,7 +31,6 @@ namespace Curl {
 			this.handle = new EasyHandle();
 		}
 
-		[CCode(cname="curl_easy_start")]
 		public void perform() throws CurlError {
 			Code res = this.handle.perform();
 			if(res != Code.OK)
