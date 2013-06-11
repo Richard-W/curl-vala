@@ -6,7 +6,7 @@ vala_precompile(C_SOURCES
 	PACKAGES
 		posix
 	CUSTOM_VAPIS
-		native-curl.vapi
+		libcurl.vapi
 	GENERATE_VAPI
 		vala-curl
 )

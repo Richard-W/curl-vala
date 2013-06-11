@@ -20,69 +20,64 @@ using Native.Curl;
 
 namespace Curl {
 	public class Easy : Object {
-		private CURL* handle;
+		private EasyHandle handle;
 
 		//Mainly for reference so the receiver and the sender are not freed
 		private Receiver receiver;
 		private Sender sender;
 
 		public Easy() throws CurlError {
-			this.handle = curl_easy_init();
-			if(this.handle == null)
-				throw new CurlError.INIT_FAILED("Initialization of CURL-handle failed");
-		}
-		~Easy() {
-			curl_easy_cleanup(this.handle);
+			this.handle = new EasyHandle();
 		}
 
 		[CCode(cname="curl_easy_start")]
 		public void perform() throws CurlError {
-			int res = curl_easy_perform(this.handle);
-			if(res != 0)
-				throw new CurlError.PERFORM_FAILED((string)curl_easy_strerror(res));
+			Code res = this.handle.perform();
+			if(res != Code.OK)
+				throw new CurlError.PERFORM_FAILED(Global.strerror(res));
 		}
 
 		public void set_url(string url) {
-			curl_easy_setopt(this.handle, CURLOPT_URL, url);
+			this.handle.setopt(Option.URL, url);
 		}
 
 		public void set_followlocation(bool val) {
-			curl_easy_setopt(this.handle, CURLOPT_FOLLOWLOCATION, val);
+			this.handle.setopt(Option.FOLLOWLOCATION, val);
 		}
 
 		public void set_receiver(Receiver receiver) {
 			this.receiver = receiver;
-			curl_easy_setopt(this.handle, CURLOPT_WRITEFUNCTION, write_function);
-			curl_easy_setopt(this.handle, CURLOPT_FILE, receiver.get_data_struct());
+			this.handle.setopt(Option.WRITEFUNCTION, write_function);
+			this.handle.setopt(Option.FILE, receiver.get_data_struct());
 		}
 
 		public void set_sender(Sender sender) {
 			this.sender = sender;
-			curl_easy_setopt(this.handle, CURLOPT_READFUNCTION, read_function);
-			curl_easy_setopt(this.handle, CURLOPT_INFILE, sender.get_data_struct());
+			this.handle.setopt(Option.READFUNCTION, read_function);
+			this.handle.setopt(Option.INFILE, sender.get_data_struct());
 		}
 
 		public void set_ssl(bool val) {
 			if(val)
-				curl_easy_setopt(this.handle, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
+				this.handle.setopt(Option.USE_SSL, UseSSL.ALL);
 			else
-				curl_easy_setopt(this.handle, CURLOPT_USE_SSL, (long)CURLUSESSL_NONE);
+				this.handle.setopt(Option.USE_SSL, UseSSL.NONE);
 		}
 
 		public void set_username(string username) {
-			curl_easy_setopt(this.handle, CURLOPT_USERNAME, username);
+			this.handle.setopt(Option.USERNAME, username);
 		}
 
 		public void set_password(string password) {
-			curl_easy_setopt(this.handle, CURLOPT_PASSWORD, password);
+			this.handle.setopt(Option.PASSWORD, password);
 		}
 
 		public void set_mail_from(string from) {
-			curl_easy_setopt(this.handle, CURLOPT_MAIL_FROM, from);
+			this.handle.setopt(Option.MAIL_FROM, from);
 		}
 
 		public void set_mail_rcpt(string rcpt) {
-			curl_easy_setopt(this.handle, CURLOPT_MAIL_RCPT, rcpt);
+			this.handle.setopt(Option.MAIL_RCPT, rcpt);
 		}
 	}
 }
