@@ -23,6 +23,7 @@ namespace Curl {
 		public Sender(char[] data) {
 			this.data = (SenderData*) malloc(sizeof(SenderData));
 			this.data->len = data.length;
+			this.data->position = 0;
 			this.data->buffer = malloc(this.data->len);
 			Posix.memcpy(this.data->buffer, (void*)data, this.data->len);
 		}
