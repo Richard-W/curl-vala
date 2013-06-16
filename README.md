@@ -22,3 +22,9 @@ This builds and installs the library and some metadata files so you can compile 
 programs with the following command
 
 > valac myprog.vala --pkg vala-curl
+
+Issues
+------
+
+At this time this library only supports a subset of the libcurl functions. Most simple things that
+you typically use curl or libcurl for should be possible anyway. Feel free to request features!
