@@ -76,8 +76,12 @@ namespace Curl {
 			this.handle.setopt(Option.MAIL_FROM, from);
 		}
 
-		public void set_mail_rcpt(string rcpt) {
-			this.handle.setopt(Option.MAIL_RCPT, rcpt);
+		public void set_mail_rcpt(string[] rcpts) {
+			Native.Curl.slist* slist = null;
+			foreach(string rcpt in rcpts) {
+				slist = Native.Curl.slist_append(slist, rcpt.to_utf8());
+			}
+			this.handle.setopt(Option.MAIL_RCPT, slist);
 		}
 	}
 }
