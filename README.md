@@ -6,13 +6,7 @@ This shared library provides an object-oriented interface to libcurl for vala an
 Installation
 ------------
 
-It is recommended to build this library in a seperate directory.
-
-> mkdir build
-> 
-> cd build
-> 
-> ../configure
+> ./configure
 > 
 > make
 > 
