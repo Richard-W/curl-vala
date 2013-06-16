@@ -7,7 +7,7 @@ set(VERSION_MAINTENANCE 0)
 
 set(VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MAINTENANCE}")
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 find_package(Vala REQUIRED)
 include(UseVala)
 
@@ -23,10 +23,51 @@ pkg_check_modules(GOBJECT gobject-2.0 REQUIRED)
 include_directories(${GOBJECT_INCLUDE_DIRS})
 link_directories(${GOBJECT_LIBRARY_DIRS})
 
-add_subdirectory(src)
+vala_precompile(C_SOURCES
+		src/curl-easy.vala
+		src/curl-curlerror.vala
+		src/curl-receiver.vala
+		src/curl-sender.vala
+		src/curl-functions.vala
+	PACKAGES
+		posix
+	CUSTOM_VAPIS
+		src/libcurl.vapi
+	GENERATE_VAPI
+		vala-curl
+	OPTIONS
+		-g
+)
+
+add_library(vala-curl SHARED ${C_SOURCES})
+target_link_libraries(vala-curl
+	${GLIB_LIBRARIES}
+	${GOBJECT_LIBRARIES}
+	${CURL_LIBRARIES}
+)
+
+install(
+	TARGETS
+		vala-curl
+	LIBRARY DESTINATION lib
+)
+
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.vapi
+	DESTINATION
+		share/vala/vapi/
+)
+
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.h
+	DESTINATION
+		include/
+)
 
 configure_file(
-	"${CMAKE_SOURCE_DIR}/vala-curl.pc.in"
+	"${CMAKE_CURRENT_SOURCE_DIR}/vala-curl.pc.in"
 	"${CMAKE_CURRENT_BINARY_DIR}/vala-curl.pc"
 )
 
