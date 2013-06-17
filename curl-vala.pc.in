@@ -6,5 +6,5 @@ includedir=${exec_prefix}/include
 Name: vala-curl
 Description: libcurl-bindings for vala
 Version: @VERSION_STRING@
-Libs: -L${libdir} -lvala-curl
+Libs: -L${libdir} -lcurl-vala
 Cflags: -I${includedir}

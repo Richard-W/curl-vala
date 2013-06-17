@@ -1,4 +1,4 @@
-vala-curl
+curl-vala
 =========
 
 This shared library provides an object-oriented interface to libcurl for vala and gobject.
@@ -15,7 +15,7 @@ Installation
 This builds and installs the library and some metadata files so you can compile and link your
 programs with the following command
 
-> valac myprog.vala --pkg vala-curl
+> valac myprog.vala --pkg curl-vala
 
 Issues
 ------

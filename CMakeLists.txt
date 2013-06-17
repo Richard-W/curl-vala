@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(vala-curl)
+project(curl-vala)
 
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
@@ -34,13 +34,13 @@ vala_precompile(C_SOURCES
 	CUSTOM_VAPIS
 		src/libcurl.vapi
 	GENERATE_VAPI
-		vala-curl
+		curl-vala
 	OPTIONS
 		-g
 )
 
-add_library(vala-curl SHARED ${C_SOURCES})
-target_link_libraries(vala-curl
+add_library(curl-vala SHARED ${C_SOURCES})
+target_link_libraries(curl-vala
 	${GLIB_LIBRARIES}
 	${GOBJECT_LIBRARIES}
 	${CURL_LIBRARIES}
@@ -48,32 +48,32 @@ target_link_libraries(vala-curl
 
 install(
 	TARGETS
-		vala-curl
+		curl-vala
 	LIBRARY DESTINATION lib
 )
 
 install(
 	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.vapi
+		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.vapi
 	DESTINATION
 		share/vala/vapi/
 )
 
 install(
 	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.h
+		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.h
 	DESTINATION
 		include/
 )
 
 configure_file(
-	"${CMAKE_CURRENT_SOURCE_DIR}/vala-curl.pc.in"
-	"${CMAKE_CURRENT_BINARY_DIR}/vala-curl.pc"
+	"${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.pc.in"
+	"${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc"
 )
 
 install(
 	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/vala-curl.pc
+		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc
 	DESTINATION
 		lib/pkgconfig/
 )
