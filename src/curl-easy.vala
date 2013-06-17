@@ -23,9 +23,10 @@ namespace Curl {
 	public class Easy : Object {
 		private EasyHandle handle;
 
-		//Mainly for reference so the receiver and the sender are not freed
+		/* References to be sure the objects do not get freed prematurely */
 		private Receiver receiver;
 		private Sender sender;
+		private Native.Curl.SList rcpt_slist;
 
 		public Easy() throws CurlError {
 			this.handle = new EasyHandle();
@@ -77,11 +78,11 @@ namespace Curl {
 		}
 
 		public void set_mail_rcpt(string[] rcpts) {
-			Native.Curl.slist* slist = null;
+			this.rcpt_slist = null;
 			foreach(string rcpt in rcpts) {
-				slist = Native.Curl.slist_append(slist, rcpt.to_utf8());
+				this.rcpt_slist = Native.Curl.SList.append((owned)this.rcpt_slist, rcpt);
 			}
-			this.handle.setopt(Option.MAIL_RCPT, slist);
+			this.handle.setopt(Option.MAIL_RCPT, this.rcpt_slist);
 		}
 	}
 }
