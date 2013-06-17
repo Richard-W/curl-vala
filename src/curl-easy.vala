@@ -32,32 +32,45 @@ namespace Curl {
 			this.handle = new EasyHandle();
 		}
 
+		/** Perform the transfer after options are set */
 		public void perform() throws CurlError {
 			Code res = this.handle.perform();
 			if(res != Code.OK)
 				throw new CurlError.PERFORM_FAILED(Global.strerror(res));
 		}
 
+		/**
+		 * Set the URL of the service you want to contact
+		 *
+		 * Examples:
+		 * http://www.example.org
+		 * ftp://ftp.example.org
+		 * imap://imap.example.org
+		 */
 		public void set_url(string url) {
 			this.handle.setopt(Option.URL, url);
 		}
 
+		/** Whether curl follows location-headers in HTTP-answers */
 		public void set_followlocation(bool val) {
 			this.handle.setopt(Option.FOLLOWLOCATION, val);
 		}
 
+		/** This sets a Receiver object where data received from curl will be stored */
 		public void set_receiver(Receiver receiver) {
 			this.receiver = receiver;
 			this.handle.setopt(Option.WRITEFUNCTION, write_function);
 			this.handle.setopt(Option.FILE, receiver.get_data_struct());
 		}
 
+		/** This sets a Sender object where data you want to send is stored */
 		public void set_sender(Sender sender) {
 			this.sender = sender;
 			this.handle.setopt(Option.READFUNCTION, read_function);
 			this.handle.setopt(Option.INFILE, sender.get_data_struct());
 		}
 
+		/** Whether SSL/TLS is required */
 		public void set_ssl(bool val) {
 			if(val)
 				this.handle.setopt(Option.USE_SSL, UseSSL.ALL);
@@ -65,18 +78,22 @@ namespace Curl {
 				this.handle.setopt(Option.USE_SSL, UseSSL.NONE);
 		}
 
+		/** Set the Username */
 		public void set_username(string username) {
 			this.handle.setopt(Option.USERNAME, username);
 		}
 
+		/** Set the password */
 		public void set_password(string password) {
 			this.handle.setopt(Option.PASSWORD, password);
 		}
 
+		/** Set the mail-address of the sender */
 		public void set_mail_from(string from) {
 			this.handle.setopt(Option.MAIL_FROM, from);
 		}
 
+		/** Set the recipient mail addresses. */
 		public void set_mail_rcpt(string[] rcpts) {
 			this.rcpt_slist = null;
 			foreach(string rcpt in rcpts) {
