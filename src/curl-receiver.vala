@@ -22,6 +22,7 @@ namespace Curl {
 		private ReceiverData* data;
 
 		public Receiver() {
+			/* Initialize the data-struct */
 			this.data = (ReceiverData*) malloc(sizeof(ReceiverData));
 			this.data->len = 0;
 			this.data->buffer = null;
@@ -32,23 +33,35 @@ namespace Curl {
 			free(this.data);
 		}
 
-
+		/** Returns the received data after a perform */
 		public string get_string() {
 			var builder = new StringBuilder();
 			builder.append((string)((char*)(this.data->buffer)));
 			return builder.str;
 		}
 
+		/** Returns a void-pointer used for the internal callback-function */
 		public void* get_data_struct() {
 			return (void*)this.data;
 		}
 	}
 
+	/** This struct holds the data received by curl */
 	private struct ReceiverData {
 		size_t len;
 		void* buffer;
 	}
 
+	/**
+	 * This function implements a prototype defined in libcurl and is used as some
+	 * kind of data sink. It would have been better to implement it as a method of Receiver,
+	 * but the signature of methods is changed by the vala-compiler. It appends the self-param
+	 * for obvious reasons.
+	 *
+	 * It would have been possible to make the data-pointer a reference to the Receiver object,
+	 * but using a struct we can make the internals of this messy operation nearly opaque for
+	 * users (except for the get_data_struct()-method).
+	 */
 	private size_t write_function(void* buf, size_t size, size_t nmemb, void *data) {
 		size_t bytes = size * nmemb;
 		ReceiverData* rdata= (ReceiverData*) data;
