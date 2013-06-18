@@ -23,14 +23,19 @@ pkg_check_modules(GOBJECT gobject-2.0 REQUIRED)
 include_directories(${GOBJECT_INCLUDE_DIRS})
 link_directories(${GOBJECT_LIBRARY_DIRS})
 
+pkg_check_modules(GIO gio-2.0 REQUIRED)
+include_directories(${GIO_INCLUDE_DIRS})
+link_directories(${GIO_LIBRARY_DIRS})
+
 vala_precompile(C_SOURCES
 		src/curl-easy.vala
 		src/curl-curlerror.vala
-		src/curl-receiver.vala
-		src/curl-sender.vala
+		src/curl-write-function.vala
+		src/curl-read-function.vala
 		src/curl-functions.vala
 	PACKAGES
 		posix
+		gio-2.0
 	CUSTOM_VAPIS
 		src/libcurl.vapi
 	GENERATE_VAPI
@@ -44,6 +49,7 @@ target_link_libraries(curl-vala
 	${GLIB_LIBRARIES}
 	${GOBJECT_LIBRARIES}
 	${CURL_LIBRARIES}
+	${GIO_LIBRARIES}
 )
 
 install(
@@ -54,6 +60,7 @@ install(
 
 install(
 	FILES
+		${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.deps
 		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.vapi
 	DESTINATION
 		share/vala/vapi/

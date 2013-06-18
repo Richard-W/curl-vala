@@ -24,8 +24,8 @@ namespace Curl {
 		private EasyHandle handle;
 
 		/* References to be sure the objects do not get freed prematurely */
-		private Receiver receiver;
-		private Sender sender;
+		private OutputStream output_stream;
+		private InputStream input_stream;
 		private Native.Curl.SList rcpt_slist;
 
 		public Easy() throws CurlError {
@@ -56,18 +56,18 @@ namespace Curl {
 			this.handle.setopt(Option.FOLLOWLOCATION, val);
 		}
 
-		/** This sets a Receiver object where data received from curl will be stored */
-		public void set_receiver(Receiver receiver) {
-			this.receiver = receiver;
+		/** This sets the output-stream that curl will write to */
+		public void set_output_stream(OutputStream output_stream) {
+			this.output_stream = output_stream;
 			this.handle.setopt(Option.WRITEFUNCTION, write_function);
-			this.handle.setopt(Option.FILE, receiver.get_data_struct());
+			this.handle.setopt(Option.FILE, (void*)output_stream);
 		}
 
-		/** This sets a Sender object where data you want to send is stored */
-		public void set_sender(Sender sender) {
-			this.sender = sender;
+		/** This sets the input-stream that curl will read from */
+		public void set_input_stream(InputStream input_stream) {
+			this.input_stream = input_stream;
 			this.handle.setopt(Option.READFUNCTION, read_function);
-			this.handle.setopt(Option.INFILE, sender.get_data_struct());
+			this.handle.setopt(Option.INFILE, (void*)input_stream);
 		}
 
 		/** Whether SSL/TLS is required */
