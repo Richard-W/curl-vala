@@ -94,7 +94,7 @@ namespace Curl {
 		}
 
 		/** Set the recipient mail addresses. */
-		public void set_mail_rcpt(string[] rcpts) {
+		public void set_mail_rcpts(string[] rcpts) {
 			this.rcpt_slist = null;
 			foreach(string rcpt in rcpts) {
 				this.rcpt_slist = Native.Curl.SList.append((owned)this.rcpt_slist, rcpt);
