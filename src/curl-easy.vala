@@ -28,7 +28,7 @@ namespace Curl {
 		private InputStream input_stream;
 		private Native.Curl.SList rcpt_slist;
 
-		public Easy() throws CurlError {
+		public Easy() {
 			this.handle = new EasyHandle();
 		}
 
