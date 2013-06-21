@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(curl-vala)
 
+option(INSTALL_HEADERS "Install header, vapi and pkgconfig files" ON)
+
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_MAINTENANCE 0)
@@ -58,29 +60,31 @@ install(
 	LIBRARY DESTINATION lib
 )
 
-install(
-	FILES
-		${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.deps
-		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.vapi
-	DESTINATION
-		share/vala/vapi/
-)
+if(INSTALL_HEADERS)
+	install(
+		FILES
+			${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.deps
+			${CMAKE_CURRENT_BINARY_DIR}/curl-vala.vapi
+		DESTINATION
+			share/vala/vapi/
+	)
 
-install(
-	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.h
-	DESTINATION
-		include/
-)
+	install(
+		FILES
+			${CMAKE_CURRENT_BINARY_DIR}/curl-vala.h
+		DESTINATION
+			include/
+	)
 
-configure_file(
-	"${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.pc.in"
-	"${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc"
-)
+	configure_file(
+		"${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.pc.in"
+		"${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc"
+	)
 
-install(
-	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc
-	DESTINATION
-		lib/pkgconfig/
-)
+	install(
+		FILES
+			${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc
+		DESTINATION
+			lib/pkgconfig/
+	)
+endif(INSTALL_HEADERS)
