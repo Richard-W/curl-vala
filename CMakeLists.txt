@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(curl-vala)
 
 option(INSTALL_HEADERS "Install header, vapi and pkgconfig files" ON)
+option(INSTALL_LIBRARY "Install shared library" ON)
 
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
@@ -54,11 +55,13 @@ target_link_libraries(curl-vala
 	${GIO_LIBRARIES}
 )
 
-install(
-	TARGETS
-		curl-vala
-	LIBRARY DESTINATION lib
-)
+if(INSTALL_LIBRARY)
+	install(
+		TARGETS
+			curl-vala
+		LIBRARY DESTINATION lib
+	)
+endif(INSTALL_LIBRARY)
 
 if(INSTALL_HEADERS)
 	install(
