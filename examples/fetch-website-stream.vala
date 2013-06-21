@@ -1,6 +1,6 @@
 int main(string[] args) {
 	if(args.length != 2) {
-		stderr.printf("usage: %s www.example.org".printf(args[0]));
+		stderr.printf("usage: %s www.example.org\n".printf(args[0]));
 		return 1;
 	}
 
