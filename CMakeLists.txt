@@ -82,6 +82,7 @@ if(INSTALL_HEADERS)
 	configure_file(
 		"${CMAKE_CURRENT_SOURCE_DIR}/curl-vala.pc.in"
 		"${CMAKE_CURRENT_BINARY_DIR}/curl-vala.pc"
+		@ONLY
 	)
 
 	install(
