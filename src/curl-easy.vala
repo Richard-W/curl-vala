@@ -39,6 +39,37 @@ namespace Curl {
 				throw new CurlError.PERFORM_FAILED(Global.strerror(res));
 		}
 
+		/** Get a CurlOutputStream you can write data to send to */
+		public CurlOutputStream get_output_stream() {
+			var input_stream = new CurlInputStream();
+			var output_stream = new CurlOutputStream(input_stream);
+			this.set_input_stream(input_stream);
+			return output_stream;
+		}
+
+		/** Get a CurlInputStream you can read received data from */
+		public CurlInputStream get_input_stream() {
+			var input_stream = new CurlInputStream();
+			var output_stream = new CurlOutputStream(input_stream);
+			this.set_output_stream(output_stream);
+			return input_stream;
+		}
+
+		/** This sets the output-stream that curl will write to */
+		public void set_output_stream(OutputStream output_stream) {
+			this.output_stream = output_stream;
+			this.handle.setopt(Option.WRITEFUNCTION, write_function);
+			this.handle.setopt(Option.FILE, (void*)output_stream);
+		}
+
+		/** This sets the input-stream that curl will read from */
+		public void set_input_stream(InputStream input_stream) {
+			this.input_stream = input_stream;
+			this.handle.setopt(Option.READFUNCTION, read_function);
+			this.handle.setopt(Option.INFILE, (void*)input_stream);
+		}
+
+
 		/**
 		 * Set the URL of the service you want to contact
 		 *
@@ -54,20 +85,6 @@ namespace Curl {
 		/** Whether curl follows location-headers in HTTP-answers */
 		public void set_followlocation(bool val) {
 			this.handle.setopt(Option.FOLLOWLOCATION, val);
-		}
-
-		/** This sets the output-stream that curl will write to */
-		public void set_output_stream(OutputStream output_stream) {
-			this.output_stream = output_stream;
-			this.handle.setopt(Option.WRITEFUNCTION, write_function);
-			this.handle.setopt(Option.FILE, (void*)output_stream);
-		}
-
-		/** This sets the input-stream that curl will read from */
-		public void set_input_stream(InputStream input_stream) {
-			this.input_stream = input_stream;
-			this.handle.setopt(Option.READFUNCTION, read_function);
-			this.handle.setopt(Option.INFILE, (void*)input_stream);
 		}
 
 		/** Whether SSL/TLS is required */

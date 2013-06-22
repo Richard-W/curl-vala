@@ -36,6 +36,8 @@ vala_precompile(C_SOURCES
 		src/curl-write-function.vala
 		src/curl-read-function.vala
 		src/curl-functions.vala
+		src/curl-input-stream.vala
+		src/curl-output-stream.vala
 	PACKAGES
 		posix
 		gio-2.0

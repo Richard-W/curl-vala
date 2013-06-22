@@ -8,10 +8,7 @@ int main(string[] args) {
 
 	curl.set_url("http://%s".printf(args[1]));
 	curl.set_followlocation(true);
-
-	//Define stream that curl will write to
-	var mostream = new MemoryOutputStream(null, GLib.realloc, GLib.free);
-	curl.set_output_stream(mostream);
+	var istream = new DataInputStream(curl.get_input_stream());
 
 	try {
 		curl.perform();
@@ -20,17 +17,6 @@ int main(string[] args) {
 		return 1;
 	}
 	
-	try {
-		mostream.close();
-	} catch(Error e) {
-		stderr.printf("failed: %s\n", e.message);
-	}
-
-	//Steal the data from the output stream and wrap it into a input stream 
-	//to read from
-	var mistream = new MemoryInputStream.from_data(mostream.steal_data(), GLib.free);
-	var istream = new DataInputStream(mistream);
-
 	string line;
 	try {
 		while((line = istream.read_line()) != null) {
