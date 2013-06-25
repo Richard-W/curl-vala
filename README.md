@@ -6,16 +6,17 @@ This shared library provides an object-oriented interface to libcurl for vala an
 Installation
 ------------
 
-> ./configure
-> 
-> make
-> 
-> make install
+```
+./configure
+make
+make install
+```
 
-This builds and installs the library and some metadata files so you can compile and link your
-programs with the following command
+This builds and installs the library and some metadata files so you can compile and link your programs with the following command
 
-> valac myprog.vala --pkg curl-vala
+```
+valac myprog.vala --pkg curl-vala
+```
 
 Issues
 ------
