@@ -3,7 +3,7 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${exec_prefix}/include
 
-Name: vala-curl
+Name: curl-vala
 Description: libcurl-bindings for vala
 Version: @VERSION_STRING@
 Libs: -L${libdir} -lcurl-vala
